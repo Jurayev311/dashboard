@@ -7,7 +7,7 @@ interface Product {
   desc: string;
   category: string;
   price: number;
-  images: string[];
+  image: string;
 }
 
 interface CreateProductProps {
@@ -23,7 +23,7 @@ const CreateProduct = ({ product, onCancel }: CreateProductProps) => {
     desc: "",
     category: "",
     price: 0,
-    images: [],
+    image: "",
   });
 
   useEffect(() => {
@@ -37,12 +37,11 @@ const CreateProduct = ({ product, onCancel }: CreateProductProps) => {
     setFormData((prevData) => ({
       ...prevData,
       [name]: name === "price" ? Number(value) || 0 : value,
-      images: name === "imageUrl" ? [value] : prevData.images, 
     }));
   };
 
   const handleSave = async () => {
-    if (!formData.title || !formData.desc || !formData.category || !formData.price) return;
+    if (!formData.title || !formData.desc || !formData.category || !formData.price || !formData.image) return;
 
     if (product?.id) {
       await updateProduct({ id: product.id, ...formData });
@@ -50,7 +49,7 @@ const CreateProduct = ({ product, onCancel }: CreateProductProps) => {
       await createProduct(formData);
     }
 
-    setFormData({ title: "", desc: "", category: "", price: 0, images: [] });
+    setFormData({ title: "", desc: "", category: "", price: 0, image: "" });
     onCancel();
   };
 
@@ -66,8 +65,8 @@ const CreateProduct = ({ product, onCancel }: CreateProductProps) => {
         <label style={{ color: "#4C4C4C", fontSize: "16px" }} htmlFor="price">Price</label>
         <input style={{ background: "#F8F8F8", borderRadius: "10px", border: "none", height: "58px", textIndent: "10px" }} type="number" name="price" value={formData.price || ""} onChange={handleChange} />
 
-        <label style={{ color: "#4C4C4C", fontSize: "16px" }} htmlFor="imageUrl">Image URL</label>
-        <input style={{ background: "#F8F8F8", borderRadius: "10px", border: "none", height: "58px", textIndent: "10px" }} type="text" name="imageUrl" value={formData.images[0] || ""} onChange={handleChange} />
+        <label style={{ color: "#4C4C4C", fontSize: "16px" }} htmlFor="image">Image URL</label>
+        <input style={{ background: "#F8F8F8", borderRadius: "10px", border: "none", height: "58px", textIndent: "10px" }} type="text" name="image" value={formData.image || ""} onChange={handleChange} />
 
         <label style={{ color: "#4C4C4C", fontSize: "16px" }} htmlFor="category">Category</label>
         <input style={{ background: "#F8F8F8", borderRadius: "10px", border: "none", height: "58px", textIndent: "10px" }} type="text" name="category" value={formData.category} onChange={handleChange} />

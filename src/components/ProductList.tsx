@@ -2,6 +2,7 @@ import { useGetProductsQuery, useDeleteProductMutation } from "../redux/api";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { useState } from "react";
+import qandl from "../assets/commodity.png";
 import CreateProduct from "./CreateProduct";
 
 interface Product {
@@ -35,27 +36,53 @@ const ProductList = () => {
           <h2 style={{ marginTop: "20px", color: "#454545" }}>Manage product</h2>
           {isLoading && <p>Yuklanmoqda...</p>}
           {error && <p>Xatolik yuz berdi</p>}
-          <ul style={{ display: "grid", gap: "20px", gridTemplateColumns: "1fr 1fr 1fr", marginTop: "20px" }}>
-            {products.map((product: Product) => (
-              <li key={product.id} style={{ padding: "16px", width: "300px", height: "396px", color: "#454545" }}>
-                {product.images.length > 0 && (
-                  <img
-                    src={product.images[0]}
-                    alt={product.title}
-                    style={{
-                      width: "100%",
-                      height: "250px",
-                      objectFit: "cover",
-                      borderRadius: "8px",
-                      margin: "0 auto",
-                      display: "block",
-                    }}
-                  />
-                )}
+          <ul
+            style={{
+              display: "grid",
+              gap: "20px",
+              gridTemplateColumns: "1fr 1fr 1fr",
+              marginTop: "20px",
+            }}
+          >
+            {Array.isArray(products) && products.map((product: Product) => (
+              <li
+                key={product.id}
+                style={{
+                  padding: "16px",
+                  width: "300px",
+                  height: "396px",
+                  color: "#454545",
+                }}
+              >
+                <img
+                  src={product.images?.length > 0 ? product.images[0] : qandl}
+                  alt={product.title}
+                  style={{
+                    width: "100%",
+                    height: "250px",
+                    objectFit: "cover",
+                    borderRadius: "8px",
+                    margin: "0 auto",
+                    display: "block",
+                  }}
+                />
                 <h3 style={{ fontSize: "20px", marginTop: "30px" }}>{product.title}</h3>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "20px" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginTop: "20px",
+                  }}
+                >
                   <p style={{ fontSize: "20px", fontWeight: "600" }}>{product.price} ₽</p>
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}
+                  >
                     <button
                       style={{
                         width: "55px",
